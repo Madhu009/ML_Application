@@ -1,20 +1,17 @@
 package com.example.madhu.ml_application.Utilities;
 
-import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.net.ssl.HttpsURLConnection;
 
 /**
@@ -35,18 +32,13 @@ public class HTTPURLConnection {
             conn.setRequestMethod("POST");
             //conn.setRequestProperty("Content-Type",
               //      "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", "" +
-                    Integer.toString(getParamsData(DataParams).getBytes().length));
+           // conn.setRequestProperty("Content-Length", "" +
+             //       Integer.toString(getParamsData(DataParams).getBytes().length));
             conn.setRequestProperty("Content-Language", "en-US");
             conn.setDoOutput(true);
-
-
-           // OutputStream os=conn.getOutputStream();
-           // BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
             DataOutputStream wr = new DataOutputStream(
                     conn.getOutputStream ());
-            wr.writeBytes (getParamsData(DataParams));
-            //bw.write(getParamsData(DataParams));
+            wr.writeBytes (convertMapToJson(DataParams).toString());
             wr.flush();
             wr.close();
 
@@ -65,7 +57,6 @@ public class HTTPURLConnection {
             }
             else
             {
-
                 response="not done";
             }
 
@@ -79,7 +70,7 @@ public class HTTPURLConnection {
 
     }
 
-
+/*
     private String getParamsData(HashMap<String,String> dataParams)throws UnsupportedEncodingException
     {
         StringBuilder stb=new StringBuilder();
@@ -89,12 +80,21 @@ public class HTTPURLConnection {
             if(first)
                 first=false;
             else
-                stb.append("&");
+                stb.append(",");
 
             stb.append(URLEncoder.encode(entry.getKey(),"UTF-8"));
-            stb.append("=");
+            stb.append(":");
             stb.append(URLEncoder.encode(entry.getValue(),"UTF-8"));
         }
         return stb.toString();
+    }*/
+
+    private JSONObject convertMapToJson(HashMap<String,String> data)throws JSONException
+    {
+        JSONObject obj=new JSONObject();
+        obj.put("name",data.get("name"));
+        obj.put("pwd",data.get("pwd"));
+
+        return obj;
     }
 }
