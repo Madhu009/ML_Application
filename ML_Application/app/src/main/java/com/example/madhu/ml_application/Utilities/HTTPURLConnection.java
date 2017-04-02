@@ -1,7 +1,10 @@
 package com.example.madhu.ml_application.Utilities;
 
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -18,8 +21,8 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Madhu on 01-04-2017.
  */
 public class HTTPURLConnection {
-    String response="";
-    URL url;
+   public String response="";
+    public URL url;
 
 
 
@@ -29,20 +32,26 @@ public class HTTPURLConnection {
         {
             url=new URL(path);
             HttpURLConnection conn=(HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod(requestMethod);
-            conn.setDoInput(true);
+            conn.setRequestMethod("POST");
+            //conn.setRequestProperty("Content-Type",
+              //      "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Length", "" +
+                    Integer.toString(getParamsData(DataParams).getBytes().length));
+            conn.setRequestProperty("Content-Language", "en-US");
             conn.setDoOutput(true);
 
 
-            OutputStream os=conn.getOutputStream();
-            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
-            bw.write(getParamsData(DataParams));
-            bw.flush();
-            bw.close();
+           // OutputStream os=conn.getOutputStream();
+           // BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+            DataOutputStream wr = new DataOutputStream(
+                    conn.getOutputStream ());
+            wr.writeBytes (getParamsData(DataParams));
+            //bw.write(getParamsData(DataParams));
+            wr.flush();
+            wr.close();
 
             int responseCode=conn.getResponseCode();
+            System.out.println("POST Response Code :: " + responseCode);
 
             if(responseCode== HttpsURLConnection.HTTP_OK)
             {
@@ -53,11 +62,11 @@ public class HTTPURLConnection {
                 {
                     response+=line;
                 }
-
             }
             else
             {
-                response="";
+
+                response="not done";
             }
 
 
