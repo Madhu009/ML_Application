@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.madhu.ml_application.MainActivity">
+    android:background="#ffffff"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".Login"
+    android:id="@+id/RelativeLayout">
 
-    <TextView android:text="Registration Page" android:layout_width="wrap_content"
+
+    <TextView android:text="Login Page" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textview"
         android:textSize="30dp"
@@ -18,27 +20,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="#7f5217"/>
-    <Button
-        android:textColor="#fff"
-        android:background="@drawable/rounded_corner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_marginTop="16dp"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
-
 
 
     <EditText
         android:layout_width="311dp"
         android:layout_height="45dp"
-        android:id="@+id/editText"
+        android:id="@+id/editTextL"
         android:hint="Name"
         android:focusable="true"
         android:textSize="19dp"
@@ -53,6 +40,16 @@
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         />
 
+
+    <!--
+
+               android:background="@drawable/edit_text_state"
+               android:layout_marginLeft="10.0dip"
+               android:layout_marginRight="10.0dip"
+               android:layout_marginBottom="5.0dip"/>
+   -->
+
+
     <EditText
         android:background="@drawable/edit_text_state"
         android:focusable="true"
@@ -62,12 +59,29 @@
         android:layout_height="45dp"
         android:inputType="textPassword"
         android:ems="100"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/editText2L"
+        android:layout_below="@+id/editTextL"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textColor="#000000"
         android:hint="Password" />
+
+    <Button
+        android:textColor="#fff"
+        android:background="@drawable/rounded_corner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginTop="16dp"
+        android:id="@+id/btLogin"
+        android:layout_below="@+id/editText2L"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+
 </RelativeLayout>

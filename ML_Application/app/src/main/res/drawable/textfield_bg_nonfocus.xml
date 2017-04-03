@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke android:width="@dimen/edittext_border_width_non_focus" android:color="@color/appEditTextBorderNormal" />
+    <padding android:left="@dimen/edittext_border_width_non_focus" android:top="@dimen/edittext_border_width_non_focus" android:right="@dimen/edittext_border_width_non_focus" android:bottom="@dimen/edittext_border_width_non_focus" />
+    <corners android:radius="@dimen/edittext_rectangle_radius" />
+    <solid android:color="@color/appEditTextBackgroundNormal" />
+</shape>

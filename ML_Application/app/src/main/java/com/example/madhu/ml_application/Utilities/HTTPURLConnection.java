@@ -57,7 +57,7 @@ public class HTTPURLConnection {
             }
             else
             {
-                response="not done";
+                response="error";
             }
 
 
