@@ -8,4 +8,8 @@
     <dimen name="edittext_border_width_non_focus">1.0px</dimen>
     <dimen name="edittext_rectangle_radius">3.0sp</dimen>
     <dimen name="edittext_border_width_focus">2.0sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -2,6 +2,7 @@ package com.example.madhu.ml_application;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -105,8 +106,15 @@ public class Login extends AppCompatActivity {
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+            //
             System.out.println("respons  "+response);
+            if(response.equals("yes")) {
+                startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_LONG).show();
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Invalid Username/Password", Toast.LENGTH_LONG).show();
+
         }
     }
 

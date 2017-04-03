@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
     private JSONObject json;
     private int success=0;
     private HTTPURLConnection service=new HTTPURLConnection();
-    private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/path";
+    private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/reg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
