@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
 
             try {
 
-                response=service.ServerCall(path,DataParams,"POST");
+                response=service.ServerCall(path,DataParams);
 
               //  json = new JSONObject(response);
                 //Get Values from JSONobject

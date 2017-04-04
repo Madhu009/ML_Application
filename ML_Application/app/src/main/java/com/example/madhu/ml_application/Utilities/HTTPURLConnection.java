@@ -23,7 +23,7 @@ public class HTTPURLConnection {
 
 
 
-    public String ServerCall(String path, HashMap<String,String> DataParams,String requestMethod)
+    public String ServerCall(String path, HashMap<String,String> DataParams)
     {
         try
         {
@@ -70,31 +70,10 @@ public class HTTPURLConnection {
 
     }
 
-/*
-    private String getParamsData(HashMap<String,String> dataParams)throws UnsupportedEncodingException
+
+    public JSONObject convertMapToJson (HashMap<String,String> map)
     {
-        StringBuilder stb=new StringBuilder();
-        boolean first=true;
-        for (Map.Entry<String,String> entry:dataParams.entrySet())
-        {
-            if(first)
-                first=false;
-            else
-                stb.append(",");
-
-            stb.append(URLEncoder.encode(entry.getKey(),"UTF-8"));
-            stb.append(":");
-            stb.append(URLEncoder.encode(entry.getValue(),"UTF-8"));
-        }
-        return stb.toString();
-    }*/
-
-    private JSONObject convertMapToJson(HashMap<String,String> data)throws JSONException
-    {
-        JSONObject obj=new JSONObject();
-        obj.put("name",data.get("name"));
-        obj.put("pwd",data.get("pwd"));
-
-        return obj;
+        JSONObject json=new JSONObject(map);
+        return json;
     }
 }

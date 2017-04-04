@@ -15,11 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.madhu.ml_application.Utilities.RequestHandler;
+import com.example.madhu.ml_application.Utilities.HTTPURLConnection;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 
@@ -118,11 +119,11 @@ public class ImageUpload extends AppCompatActivity
 
             @Override
             protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
+                HTTPURLConnection rh = new HTTPURLConnection();
                 HashMap<String,String> param = new HashMap<String,String>();
                 param.put(KEY_TEXT,text);
                 param.put(KEY_IMAGE,image);
-                String result = rh.sendPostRequest(UPLOAD_URL, param);
+                String result = rh.ServerCall(UPLOAD_URL, param);
                 return result;
             }
 

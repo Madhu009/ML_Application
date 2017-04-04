@@ -89,7 +89,7 @@ public class Login extends AppCompatActivity {
 
             try {
 
-                response=service.ServerCall(path,DataParams,"POST");
+                response=service.ServerCall(path,DataParams);
 
                 //  json = new JSONObject(response);
                 //Get Values from JSONobject
