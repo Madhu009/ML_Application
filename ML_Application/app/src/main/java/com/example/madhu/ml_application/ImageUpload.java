@@ -92,7 +92,7 @@ public class ImageUpload extends AppCompatActivity
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
 
         return encodedImage;
     }
