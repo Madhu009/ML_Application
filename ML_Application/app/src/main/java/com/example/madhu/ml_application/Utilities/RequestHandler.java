@@ -67,7 +67,7 @@ public class RequestHandler {
     {
         JSONObject obj=new JSONObject();
         obj.put("name",data.get("name"));
-        obj.put("pwd",data.get("pwd"));
+        obj.put("image",data.get("image"));
 
         return obj;
     }

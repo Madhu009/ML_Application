@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public class ImageUpload extends AppCompatActivity implements View.OnClickListener
+public class ImageUpload extends AppCompatActivity
 {
 
     private Button buttonUpload;
@@ -44,7 +44,7 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_image_upload);
 
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
         buttonChoose = (Button) findViewById(R.id.buttonChooseImage);
@@ -52,8 +52,18 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
         editText = (EditText) findViewById(R.id.editText);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        buttonChoose.setOnClickListener(this);
-        buttonUpload.setOnClickListener(this);
+        buttonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               showFileChooser();
+            }
+        });
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage();
+            }
+        });
     }
 
     private void showFileChooser() {
@@ -122,15 +132,6 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if(v == buttonChoose){
-            showFileChooser();
-        }
-        if(v == buttonUpload){
-            uploadImage();
-        }
-    }
 }
 
 
