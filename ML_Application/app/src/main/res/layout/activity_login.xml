@@ -26,11 +26,12 @@
         android:layout_width="311dp"
         android:layout_height="45dp"
         android:id="@+id/editTextL"
-        android:hint="Name"
+        android:hint=" Name"
         android:focusable="true"
         android:textSize="19dp"
         android:layout_marginTop="186dp"
         android:ems="100"
+        android:drawableLeft="@mipmap/ic_username"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -59,6 +60,7 @@
         android:layout_height="45dp"
         android:inputType="textPassword"
         android:ems="100"
+        android:drawableLeft="@mipmap/ic_pwd"
         android:id="@+id/editText2L"
         android:layout_below="@+id/editTextL"
         android:layout_alignParentLeft="true"
@@ -66,7 +68,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textColor="#000000"
-        android:hint="Password" />
+        android:hint=" Password" />
 
     <Button
         android:textColor="#fff"

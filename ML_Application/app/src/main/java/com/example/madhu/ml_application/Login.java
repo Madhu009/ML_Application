@@ -109,7 +109,7 @@ public class Login extends AppCompatActivity {
             //
             System.out.println("respons  "+response);
             if(response.equals("yes")) {
-                startActivity(new Intent(getApplicationContext(), ImageUpload.class));
+                startActivity(new Intent(getApplicationContext(), Chat.class));
                 Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_LONG).show();
             }
             else

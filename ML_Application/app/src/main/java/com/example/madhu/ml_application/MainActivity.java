@@ -111,6 +111,7 @@ public class MainActivity extends Activity {
             }
             Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
             System.out.println("respons  "+response);
+            response="";
         }
     }
 
