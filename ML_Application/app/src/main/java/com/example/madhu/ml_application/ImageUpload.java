@@ -100,7 +100,7 @@ public class ImageUpload extends AppCompatActivity
 
 
     public void uploadImage(){
-        final String text = editText.getText().toString().trim();
+
         final String image = getStringImage(bitmap);
         class UploadImage extends AsyncTask<Void,Void,String> {
             ProgressDialog loading;
@@ -114,14 +114,15 @@ public class ImageUpload extends AppCompatActivity
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(ImageUpload.this,s,Toast.LENGTH_LONG).show();
+               startActivity(new Intent(getApplicationContext(),Login.class));
+                finish();
+
             }
 
             @Override
             protected String doInBackground(Void... params) {
                 HTTPURLConnection rh = new HTTPURLConnection();
                 HashMap<String,String> param = new HashMap<String,String>();
-                param.put(KEY_TEXT,text);
                 param.put(KEY_IMAGE,image);
                 String result = rh.ServerCall(UPLOAD_URL, param);
                 return result;

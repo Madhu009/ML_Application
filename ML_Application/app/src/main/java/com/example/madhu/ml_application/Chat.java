@@ -122,7 +122,7 @@ public class Chat extends CustomActivity {
         super.onClick(v);
         if (v.getId() == R.id.btnSend) {
             //sendMessage();
-            adp.notifyDataSetChanged();
+            //adp.notifyDataSetChanged();
             txt.setText(null);
         }
 
@@ -223,10 +223,11 @@ public class Chat extends CustomActivity {
      * adapter shows the Sent or Receieved Chat message in each list item.
      */
     private class ChatAdapter extends BaseAdapter {
-
         /* (non-Javadoc)
          * @see android.widget.Adapter#getCount()
          */
+        String s = txt.getText().toString();
+
         @Override
         public int getCount() {
             return 1;
@@ -254,7 +255,7 @@ public class Chat extends CustomActivity {
         @SuppressLint("InflateParams")
         @Override
         public View getView(int pos, View v, ViewGroup arg2) {
-            Conversation c = new Conversation();
+            Conversation c = getItem(pos);
             if (c.isSent())
                 v = getLayoutInflater().inflate(R.layout.chat_item_sent, null);
             else
@@ -264,7 +265,7 @@ public class Chat extends CustomActivity {
             lbl.setText("text");
 
             lbl = (TextView) v.findViewById(R.id.lbl2);
-            lbl.setText("test");
+            lbl.setText(c.getMsg());
 
             lbl = (TextView) v.findViewById(R.id.lbl3);
             if (c.isSent()) {

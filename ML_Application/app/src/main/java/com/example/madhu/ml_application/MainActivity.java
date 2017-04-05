@@ -107,7 +107,8 @@ public class MainActivity extends Activity {
 
             if(response.equals("yes"))
             {
-                startActivity(new Intent(getApplicationContext(),Login.class));
+                startActivity(new Intent(getApplicationContext(),ImageUpload.class));
+                finish();
             }
             Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
             System.out.println("respons  "+response);

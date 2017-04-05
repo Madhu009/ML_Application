@@ -59,7 +59,7 @@ public class Conversation
         this.receiver = receiver;
         this.photoUrl = photoUrl;
 	}
-	public Conversation() {
+	public Conversation(String msg) {
 		this.msg = msg;
 		this.date = date;
 		this.sender = sender;
