@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:background="#ffffff">
+
+    <TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textColor="#000000"
+        android:textSize="24dip"
+        android:layout_margin="5dip"
+        android:layout_gravity="center"
+        android:text="Product Catalog">
+
+    </TextView>
+    <ListView android:layout_height="wrap_content"
+        android:layout_weight="1" android:id="@+id/ListViewCatalog"
+        android:layout_width="fill_parent"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:cacheColorHint="#ffffff">
+    </ListView>
+
+    <Button android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ButtonViewCart"
+        android:textColor="#fff"
+        android:background="@drawable/rounded_corner"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/editText2L"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="View Shopping Cart"></Button>
+
+
+
+</LinearLayout>
