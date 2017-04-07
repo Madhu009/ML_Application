@@ -29,6 +29,16 @@
         </TextView>
     </LinearLayout>
 
+    <TextView android:id="@+id/TextViewProductPrice"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:layout_width="fill_parent"
+        android:text="Product Price"
+        android:textColor="#000000">
+
+    </TextView>
+
+
     <TextView android:layout_height="wrap_content"
         android:id="@+id/TextViewProductDetails"
         android:layout_width="fill_parent"
@@ -38,6 +48,43 @@
         android:text="Product description">
 
     </TextView>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="fill_parent" android:id="@+id/linearLayoutCurrentlyInCart">
+        <TextView android:id="@+id/textViewCurrentlyInCart"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="20dip" android:textColor="#000000" android:text="Currently in Cart:"
+            android:layout_margin="5dip"></TextView>
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="fill_parent" android:id="@+id/linearLayoutAddLayout"
+        android:orientation="horizontal" android:layout_margin="5dip">
+        <TextView android:id="@+id/textView1"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:text="Quantity:"
+            android:textColor="#000000">
+
+        </TextView>
+
+        <EditText android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.13"
+            android:text="1"
+            android:gravity="right"
+            android:id="@+id/editTextQuantity"
+            android:inputType="number"
+            android:focusable="true"
+            android:textSize="19dp"
+            android:ems="100"
+            android:textColor="#000000"
+            android:background="@drawable/edit_text_state">
+
+
+        </EditText>
+
+        </LinearLayout>
 
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,5 +98,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Add to Cart"></Button>
+        android:text="Set Quantity"></Button>
 </LinearLayout>

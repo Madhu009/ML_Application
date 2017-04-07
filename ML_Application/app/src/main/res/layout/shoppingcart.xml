@@ -12,6 +12,25 @@
 
     </TextView>
 
+    <TextView android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:text="Click on a product to edit the quantity">
+
+    </TextView>
+
+    <TextView android:layout_height="wrap_content"
+        android:id="@+id/TextViewSubtotal"
+        android:layout_width="fill_parent"
+        android:layout_margin="5dip"
+        android:textColor="#000000"
+        android:text="Subtotal"
+        android:textStyle="bold">
+
+    </TextView>
+
+
     <ListView android:layout_height="wrap_content"
         android:layout_weight="1" android:id="@+id/ListViewCatalog"
         android:layout_width="fill_parent"
@@ -22,7 +41,7 @@
 
     </ListView>
 
-    <Button android:layout_width="366dp"
+    <!--<Button android:layout_width="366dp"
         android:layout_height="wrap_content"
         android:id="@+id/ButtonRemoveFromCart"
         android:textColor="#fff"
@@ -30,7 +49,7 @@
         android:text="Remove from Cart"
         android:layout_gravity="center_horizontal">
 
-    </Button>
+    </Button>-->
 
     <LinearLayout android:id="@+id/LinearLayout01"
         android:layout_width="wrap_content"

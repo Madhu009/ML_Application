@@ -9,22 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.madhu.ml_application.R;
-
+//jj
 public class ProductAdapter extends BaseAdapter {
 
     private List<Product> mProductList;
     private LayoutInflater mInflater;
-    private boolean mShowCheckbox;
+    private boolean mShowQuantity;
 
-    public ProductAdapter(List<Product> list, LayoutInflater inflater, boolean showCheckbox) {
+    public ProductAdapter(List<Product> list, LayoutInflater inflater, boolean showQuantity) {
         mProductList = list;
         mInflater = inflater;
-        mShowCheckbox = showCheckbox;
+        mShowQuantity = showQuantity;
     }
 
     @Override
@@ -47,16 +46,17 @@ public class ProductAdapter extends BaseAdapter {
         final ViewItem item;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item,
-                    null);
+            convertView = mInflater.inflate(R.layout.item, null);
             item = new ViewItem();
 
             item.productImageView = (ImageView) convertView
                     .findViewById(R.id.ImageViewItem);
 
-            item.productTitle = (TextView) convertView.findViewById(R.id.TextViewItem);
+            item.productTitle = (TextView) convertView
+                    .findViewById(R.id.TextViewItem);
 
-            item.productCheckbox = (CheckBox) convertView.findViewById(R.id.CheckBoxSelected);
+            item.productQuantity = (TextView) convertView
+                    .findViewById(R.id.textViewQuantity);
 
             convertView.setTag(item);
         } else {
@@ -68,24 +68,23 @@ public class ProductAdapter extends BaseAdapter {
         item.productImageView.setImageDrawable(curProduct.productImage);
         item.productTitle.setText(curProduct.title);
 
-        if(!mShowCheckbox) {
-            item.productCheckbox.setVisibility(View.GONE);
+        // Show the quantity in the cart or not
+        if (mShowQuantity) {
+            item.productQuantity.setText("Quantity: "
+                    + ShoppingCartHelper.getProductQuantity(curProduct));
         } else {
-            if(curProduct.selected == true)
-                item.productCheckbox.setChecked(true);
-            else
-                item.productCheckbox.setChecked(false);
+            // Hid the view
+            item.productQuantity.setVisibility(View.GONE);
         }
-
 
         return convertView;
     }
 
-
     private class ViewItem {
         ImageView productImageView;
         TextView productTitle;
-        CheckBox productCheckbox;
+        TextView productQuantity;
     }
 
 }
+
