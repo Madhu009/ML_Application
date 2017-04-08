@@ -22,14 +22,14 @@
             android:paddingTop="@dimen/pad_5dp" >
 
             <TextView
-                android:id="@+id/lbl1"
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
                 android:textColor="@color/white"
                 android:textSize="@dimen/txt_13sp" />
             <TextView
-                android:id="@+id/lbl2"
+                android:id="@+id/msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Message"
@@ -40,7 +40,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/lbl3"
+            android:id="@+id/st"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status"

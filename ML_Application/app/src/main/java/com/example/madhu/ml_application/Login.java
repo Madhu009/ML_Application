@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.madhu.ml_application.ECommerce.Main2Activity;
+import com.example.madhu.ml_application.ChatBot.ChatBot;
 import com.example.madhu.ml_application.Shopping.CatalogActivity;
 import com.example.madhu.ml_application.Utilities.HTTPURLConnection;
 
@@ -112,7 +112,7 @@ public class Login extends AppCompatActivity {
             System.out.println("respons  "+response);
             if(response.equals("yes")) {
                 //gsdhdsh
-                startActivity(new Intent(getApplicationContext(), CatalogActivity.class));
+                startActivity(new Intent(getApplicationContext(), ChatBot.class));
                 Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_LONG).show();
             }
             else

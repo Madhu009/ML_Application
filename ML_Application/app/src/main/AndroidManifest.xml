@@ -30,10 +30,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".ECommerce.Main2Activity" />
+
         <activity android:name=".Shopping.CatalogActivity" />
         <activity android:name=".Shopping.ProductDetailsActivity" />
-        <activity android:name=".Shopping.ShoppingCartActivity"></activity>
+        <activity android:name=".Shopping.ShoppingCartActivity" />
+        <activity android:name=".ChatBot.ChatBot"></activity>
     </application>
 
 </manifest>
