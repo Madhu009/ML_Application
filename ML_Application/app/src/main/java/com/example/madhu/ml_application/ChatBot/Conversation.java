@@ -12,52 +12,50 @@ public class Conversation
 {
 
 	/** The Constant STATUS_SENDING. */
-	public static final int STATUS_SENDING = 0;
+	public String STATUS_SENDING = "Sending";
 
 	/** The Constant STATUS_SENT. */
-	public static final int STATUS_SENT = 1;
+	public static final String STATUS_SENT = "Sent";
 
 	/** The Constant STATUS_FAILED. */
-	public static final int STATUS_FAILED = 2;
+	public static final String STATUS_FAILED = "Failed";
 
 	/** The msg. */
 	private String msg;
 
 	/** The status. */
-	private int status = STATUS_SENT;
+	private int status = 0;
 
 	/** The date. */
 	private Date date;
 
 	/** The sender. */
-	private String user;
-
-    /** The receiver */
-    private String bot;
+	private boolean receiver=true;
 
 
+	public void setReceiver(boolean re)
+	{
 
-	/**
-	 * Instantiates a new conversation.
-	 * 
-	 * @param msg
-	 *            the msg
-	 * @param date
-	 *            the date
-	 * @param sender
-	 *            the sender
-     * @param receiver
-     *            the receiver
-	 */
-	public Conversation(int st) {
-	this.status=st;
+		this.receiver=re;
 	}
 
+	public Conversation() {
+
+	}
+
+	public String getStatusSending()
+	{
+		return STATUS_SENDING;
+	}
 	/**
 	 * Gets the msg.
 	 * 
 	 * @return the msg
 	 */
+	public void setStatusSending(String s)
+	{
+		this.STATUS_SENDING=s;
+	}
 	public String getMsg()
 	{
 		return msg;
@@ -81,7 +79,7 @@ public class Conversation
 	 */
 	public boolean isSent()
 	{
-		return true;
+		return receiver;
 		//return UserList.user.getId().contentEquals(sender);
 	}
 
@@ -111,48 +109,7 @@ public class Conversation
      *
      * @return the sender
      */
-    public String getReceiver()
-    {
-        return bot;
-    }
 
-    /**
-     * Sets the sender.
-     *
-     * @param receiver
-     *            the new sender
-     */
-    public void setReceiver(String receiver)
-    {
-        this.bot = receiver;
-    }
-
-	/**
-	 * Gets the sender.
-	 * 
-	 * @return the sender
-	 */
-	public String getSender()
-	{
-		return user;
-	}
-
-	/**
-	 * Sets the sender.
-	 *
-	 * @param sender
-	 *            the new sender
-	 */
-	public void setSender(String sender)
-	{
-		this.user = sender;
-	}
-
-	/**
-	 * Gets the status.
-	 * 
-	 * @return the status
-	 */
 	public int getStatus()
 	{
 		return 10;

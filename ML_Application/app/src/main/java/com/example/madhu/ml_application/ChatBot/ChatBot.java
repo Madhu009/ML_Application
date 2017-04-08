@@ -1,6 +1,9 @@
 package com.example.madhu.ml_application.ChatBot;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -12,18 +15,27 @@ import android.widget.Toast;
 
 import com.example.madhu.ml_application.R;
 import com.example.madhu.ml_application.ChatBot.ConversationHelper;
+import com.example.madhu.ml_application.Utilities.HTTPURLConnection;
 import com.example.madhu.ml_application.demo.custom.CustomActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class ChatBot extends AppCompatActivity {
 
    private List<Conversation> convs;
 
+    private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";
+    private HTTPURLConnection service=new HTTPURLConnection();
+
     private EditText txt;
     private Button btsend;
     ChatAdapter adapter;
+    String msg="";
     CustomActivity c=new CustomActivity();
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,13 +57,16 @@ public class ChatBot extends AppCompatActivity {
             public void onClick(View v) {
                 if(!txt.getText().toString().equals(""))
                 {
-                   String msg=txt.getText().toString();
-                    Conversation co=new Conversation(2);
+                   msg=txt.getText().toString();
+
+                    Conversation co=new Conversation();
                     co.setMsg(msg);
+                    txt.setText("");
                     co.setDate(Calendar.getInstance().getTime());
                     co.setStatus(100);
                     convs.add(co);
                     adapter.notifyDataSetChanged();
+                    new SendDataToServer().execute();
                 }
                 else
                     Toast.makeText(getApplicationContext(),"no internet connection",Toast.LENGTH_LONG).show();
@@ -60,6 +75,74 @@ public class ChatBot extends AppCompatActivity {
         });
 
     }
+
+    //Server Call
+    private class SendDataToServer extends AsyncTask<Void,Void,Void>
+    {
+        HashMap<String,String> DataParams;
+        String response = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            DataParams=new HashMap<String, String>();
+            DataParams.put("msg", msg);
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            //Call ServerData() method to call webservice and store result in response
+
+            try {
+
+                response=service.ServerCall(path,DataParams);
+
+                //  json = new JSONObject(response);
+                //Get Values from JSONobject
+                //success = json.getInt("success");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("response").equals("yes")) {
+                    Conversation c=convs.get(convs.size()-1);
+                    c.setStatusSending("Sent");
+                    adapter.notifyDataSetChanged();
+
+                    String message = obj.getString("msg");
+
+                    Conversation res=new Conversation();
+
+                    res.setMsg(message);
+                    res.setDate(Calendar.getInstance().getTime());
+                    res.setStatusSending("Received");
+                    res.setReceiver(false);
+                    convs.add(res);
+                    adapter.notifyDataSetChanged();
+
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
+
+
+            } catch (JSONException ex) {
+
+            }
+
+
+
+        }
+    }
+
 
 
 

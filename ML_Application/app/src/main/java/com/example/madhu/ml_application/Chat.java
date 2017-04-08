@@ -261,13 +261,13 @@ public class Chat extends CustomActivity {
             else
                 v = getLayoutInflater().inflate(R.layout.chat_item_rcv, null);
 
-            TextView lbl = (TextView) v.findViewById(R.id.lbl1);
+            TextView lbl = (TextView) v.findViewById(R.id.time);
             lbl.setText("text");
 
-            lbl = (TextView) v.findViewById(R.id.lbl2);
+            lbl = (TextView) v.findViewById(R.id.msg);
             lbl.setText(c.getMsg());
 
-            lbl = (TextView) v.findViewById(R.id.lbl3);
+            lbl = (TextView) v.findViewById(R.id.st);
             if (c.isSent()) {
                 if (c.getStatus() == Conversation.STATUS_SENT)
                     lbl.setText(R.string.delivered_text);

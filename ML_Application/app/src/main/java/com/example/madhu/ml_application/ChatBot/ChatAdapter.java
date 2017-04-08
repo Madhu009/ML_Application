@@ -52,9 +52,9 @@ public class ChatAdapter  extends BaseAdapter {
         final ViewItem item;
         Conversation conversation = conversations.get(position);
         if (conversation.isSent())
-            convertView = mInflater.inflate(R.layout.chat_item_sent, null);
-        else
             convertView = mInflater.inflate(R.layout.chat_item_rcv, null);
+        else
+            convertView = mInflater.inflate(R.layout.chat_item_sent, null);
         item = new ViewItem();
 
         item.time = (TextView) convertView
@@ -90,7 +90,7 @@ public class ChatAdapter  extends BaseAdapter {
 
         item.time.setText(conversation.getDate().toString());
         item.message.setText(conversation.getMsg());
-        item.st.setText(String.valueOf(conversation.getStatus()));
+        item.st.setText(conversation.getStatusSending());
 
         return convertView;
     }
