@@ -10,6 +10,9 @@
     <string name="sending_text">Sending...</string>
     <string name="failed_text">Failed</string>
 
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">

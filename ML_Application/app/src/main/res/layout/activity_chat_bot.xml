@@ -18,6 +18,14 @@
         android:paddingTop="@dimen/pad_10dp">
     </ListView>
 
+    <ImageButton
+        android:id="@+id/btnSpeak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@mipmap/ico_mic"
+        android:layout_gravity="center_horizontal" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +40,7 @@
             style="edittext_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.06"
             android:hint="Enter Text" >
 
 

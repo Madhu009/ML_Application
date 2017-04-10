@@ -2,14 +2,17 @@ package com.example.madhu.ml_application.ChatBot;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,9 +24,11 @@ import com.example.madhu.ml_application.demo.custom.CustomActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatBot extends AppCompatActivity {
 
@@ -32,8 +37,10 @@ public class ChatBot extends AppCompatActivity {
     private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";
     private HTTPURLConnection service=new HTTPURLConnection();
 
+    private final int REQ_CODE_SPEECH_INPUT = 100;
     private EditText txt;
     private Button btsend;
+    private ImageButton btnSpeak;
     ChatAdapter adapter;
     String msg="";
     CustomActivity c=new CustomActivity();
@@ -69,11 +76,59 @@ public class ChatBot extends AppCompatActivity {
                     new SendDataToServer().execute();
                 }
                 else
-                    Toast.makeText(getApplicationContext(),"no internet connection",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"no text",Toast.LENGTH_LONG).show();
 
             }
         });
 
+        btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+
+
+
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
+
+    }
+
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    txt.setText(result.get(0));
+                }
+                break;
+            }
+
+        }
     }
 
     //Server Call
