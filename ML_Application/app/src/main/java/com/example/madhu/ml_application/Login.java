@@ -111,13 +111,14 @@ public class Login extends AppCompatActivity {
             //
             System.out.println("respons  "+response);
             if(response.equals("yes")) {
-                //gsdhdsh
+
                 startActivity(new Intent(getApplicationContext(), ChatBot.class));
                 Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_LONG).show();
+                finish();
             }
             else
                 Toast.makeText(getApplicationContext(), "Invalid Username/Password", Toast.LENGTH_LONG).show();
-
+                tv2.setText("");
         }
     }
 

@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
-    Button bt;
+    Button bt,bt2;
     EditText tv1,tv2;
     private String name="",pwd="";
     private ProgressDialog pDialog;
@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bt=(Button)findViewById(R.id.button);
+        bt2=(Button)findViewById(R.id.loginbutton);
         tv1=(EditText)findViewById(R.id.editText);
         tv2=(EditText)findViewById(R.id.editText2);
 
@@ -61,7 +62,17 @@ public class MainActivity extends Activity {
                 }
             }
         });
-    }//end oncreate method
+
+
+    bt2.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+            startActivity(new Intent(getApplicationContext(),Login.class));
+        }
+    });
+}//end oncreate method
 
     private class SendDataToServer extends AsyncTask<Void,Void,Void>
     {

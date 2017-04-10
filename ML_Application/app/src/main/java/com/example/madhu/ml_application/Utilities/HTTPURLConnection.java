@@ -25,13 +25,15 @@ public class HTTPURLConnection {
 
     public String ServerCall(String path, HashMap<String,String> DataParams)
     {
+        response="";
         try
         {
             url=new URL(path);
             HttpURLConnection conn=(HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            //conn.setRequestProperty("Content-Type",
-              //      "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Type",
+                   "application/json");
+
            // conn.setRequestProperty("Content-Length", "" +
              //       Integer.toString(getParamsData(DataParams).getBytes().length));
             conn.setRequestProperty("Content-Language", "en-US");

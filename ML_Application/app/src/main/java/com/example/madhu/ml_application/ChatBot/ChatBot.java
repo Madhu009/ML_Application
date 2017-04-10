@@ -34,7 +34,8 @@ public class ChatBot extends AppCompatActivity {
 
    private List<Conversation> convs;
 
-    private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";
+    private String path = "http://10.0.2.2:5000/text";
+  //  private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";//java
     private HTTPURLConnection service=new HTTPURLConnection();
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -165,9 +166,10 @@ public class ChatBot extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
+            Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
             try {
                 JSONObject obj = new JSONObject(response);
+                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                 if (obj.getString("response").equals("yes")) {
                     Conversation c=convs.get(convs.size()-1);
                     c.setStatusSending("Sent");
@@ -190,6 +192,8 @@ public class ChatBot extends AppCompatActivity {
 
 
             } catch (JSONException ex) {
+                System.out.println("madhu");
+                System.out.println(ex);
 
             }
 
