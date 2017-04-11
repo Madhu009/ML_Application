@@ -31,7 +31,7 @@ public class HTTPURLConnection {
             url=new URL(path);
             HttpURLConnection conn=(HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type",
+           conn.setRequestProperty("Content-Type",
                    "application/json");
 
            // conn.setRequestProperty("Content-Length", "" +

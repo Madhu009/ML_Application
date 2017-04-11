@@ -30,4 +30,7 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_product_details">ProductDetailsActivity</string>
+
+
+    <string name="app_id">897886000351780</string>
 </resources>
