@@ -98,9 +98,6 @@ private String j;
         }
         setContentView(R.layout.activity_main);
 
-        //fgadbjkjkb
-        //hiuhiuh
-        Button b;
         LB = (LoginButton) findViewById(R.id.fblogin_button);
         // LB.setReadPermissions("User_Friends");
         LB.setOnClickListener(new View.OnClickListener() {
