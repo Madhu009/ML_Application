@@ -25,6 +25,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
@@ -34,8 +36,11 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class MainActivity extends Activity {
@@ -64,26 +69,6 @@ private String j;
 
         callbackManager = CallbackManager.Factory.create();
 
-
-        accessTokenTracker= new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
-
-            }
-        };
-
-        profileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
-                displayMessage(newProfile);
-            }
-        };
-
-        accessTokenTracker.startTracking();
-
-
-        profileTracker.startTracking();
-
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     getPackageName(), PackageManager.GET_SIGNATURES);
@@ -99,7 +84,9 @@ private String j;
         setContentView(R.layout.activity_main);
 
         LB = (LoginButton) findViewById(R.id.fblogin_button);
-        // LB.setReadPermissions("User_Friends");
+         LB.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends"));
+
         LB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,11 +95,30 @@ private String j;
                         new FacebookCallback<LoginResult>() {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
-                                // App code
 
-                                // LoginManager.getInstance().logInWithReadPermissions(Login.this, Arrays.asList("public_profile", "user_friends"));
-                                // Log.e("-->", Arrays.asList("public_profile", "user_friends").toString());
-                                Toast.makeText(getApplication(), "Succesfully Fetched the data from Facebook", Toast.LENGTH_SHORT).show();
+                                String accessToken = loginResult.getAccessToken().getToken();
+                                Log.i("accessToken", accessToken);
+
+                                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                                        new GraphRequest.GraphJSONObjectCallback() {
+
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.i("LoginActivity", response.toString());
+                                        // Get facebook data from login
+                                        Bundle bFacebookData = getFacebookData(object);
+                                        Toast.makeText(getApplication(), "Succesfully Fetched the data from Facebook", Toast.LENGTH_SHORT).show();
+
+                                        System.out.println("id is "+ bFacebookData.getString("id"));
+                                        System.out.println("email is "+ bFacebookData.getString("email"));
+
+                                    }
+                                        });
+                                Bundle parameters = new Bundle();
+                                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
+                                request.setParameters(parameters);
+                                request.executeAsync();
+
                             }
 
                             @Override
@@ -133,6 +139,8 @@ private String j;
 
             }
         });
+
+
 
         bt=(Button)findViewById(R.id.button);
         bt2=(Button)findViewById(R.id.loginbutton);
@@ -175,11 +183,45 @@ private String j;
 
 
 
+    private Bundle getFacebookData(JSONObject object) {
+
+        try {
+            Bundle bundle = new Bundle();
+            String id = object.getString("id");
+
+            bundle.putString("idFacebook", id);
+            if (object.has("first_name"))
+                bundle.putString("first_name", object.getString("first_name"));
+            if (object.has("last_name"))
+                bundle.putString("last_name", object.getString("last_name"));
+            if (object.has("email"))
+                bundle.putString("email", object.getString("email"));
+            if (object.has("gender"))
+                bundle.putString("gender", object.getString("gender"));
+            if (object.has("birthday"))
+                bundle.putString("birthday", object.getString("birthday"));
+            if (object.has("location"))
+                bundle.putString("location", object.getJSONObject("location").getString("name"));
+
+            return bundle;
+        }
+        catch(JSONException e) {
+            Log.d("TAG","Error parsing JSON");
+            return null;
+        }
+    }
 
     private void displayMessage(Profile profile){
         if(profile != null){
           //  textView.setText(profile.getName());
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
     private class SendDataToServer extends AsyncTask<Void,Void,Void>
     {
