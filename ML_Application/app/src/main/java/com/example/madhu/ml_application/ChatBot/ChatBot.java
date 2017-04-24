@@ -34,8 +34,8 @@ public class ChatBot extends AppCompatActivity {
 
    private List<Conversation> convs;
 
-    private String path = "http://10.0.2.2:5000/text";
-  //  private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";//java
+    private String path = "http://10.0.2.2:5000/gett";
+    //private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";//java
     private HTTPURLConnection service=new HTTPURLConnection();
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
