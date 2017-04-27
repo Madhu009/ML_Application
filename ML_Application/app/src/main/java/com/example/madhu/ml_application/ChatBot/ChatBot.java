@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.madhu.ml_application.Login;
 import com.example.madhu.ml_application.R;
 import com.example.madhu.ml_application.ChatBot.ConversationHelper;
 import com.example.madhu.ml_application.Utilities.HTTPURLConnection;
@@ -27,6 +30,7 @@ import com.example.madhu.ml_application.demo.custom.CustomActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +41,10 @@ import java.util.Locale;
 public class ChatBot extends AppCompatActivity {
 
    private List<Conversation> convs;
+
+    public static final String KEY_IMAGE = "image";
+    public static final String KEY_TEXT = "name";
+    public static final String UPLOAD_URL = "http://10.0.2.2:8080/ML_Application/rest/Service/upload";
 
     private String path = "http://10.0.2.2:5000/gett";
     //private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";//java
@@ -162,7 +170,7 @@ public class ChatBot extends AppCompatActivity {
             }
             case PICK_IMAGE_REQUEST:
             {
-                if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                if (resultCode == RESULT_OK && data != null && data.getData() != null) {
                     Uri filePath = data.getData();
                     try {
 
@@ -174,6 +182,7 @@ public class ChatBot extends AppCompatActivity {
 
                         bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                         //imageView.setImageBitmap(bitmap);
+                        uploadImage();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -181,11 +190,106 @@ public class ChatBot extends AppCompatActivity {
 
                 break;
             }
+        }
+    }
 
 
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+
+        return encodedImage;
+    }
+
+
+    public void uploadImage(){
+
+        final String image = getStringImage(bitmap);
+        class UploadImage extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(ChatBot.this,"Please wait...","uploading",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                    if (obj.getString("response").equals("yes")&& obj.getString("image").equals("")) {
+                        Conversation c=convs.get(convs.size()-1);
+                        c.setStatusSending("Sent");
+                        adapter.notifyDataSetChanged();
+
+                        String message = obj.getString("msg");
+
+                        Conversation res=new Conversation();
+
+                        res.setMsg(message);
+                        res.setDate(Calendar.getInstance().getTime());
+                        res.setStatusSending("Received");
+                        res.setReceiver(false);
+                        convs.add(res);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                    else  if (obj.getString("response").equals("yes")&& !obj.getString("image").equals(""))
+                    {
+                        Conversation c=convs.get(convs.size()-1);
+                        c.setStatusSending("Sent");
+                        adapter.notifyDataSetChanged();
+
+                        String img=obj.getString("image");
+                        Bitmap b=StringToBitMap(img);
+                        Conversation res=new Conversation();
+                        res.setBitmapImage(b);
+                        res.setStatusSending("Received");
+                        res.isImage(true);
+                        convs.add(res);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
+
+
+                } catch (JSONException ex) {
+                    System.out.println(ex);
+
+                }
+            }
+
+
+            @Override
+            protected String doInBackground(Void... params) {
+                HTTPURLConnection rh = new HTTPURLConnection();
+                HashMap<String,String> param = new HashMap<String,String>();
+                param.put(KEY_IMAGE,image);
+                String result = rh.ServerCall(UPLOAD_URL, param);
+                return result;
+            }
 
         }
+        UploadImage u = new UploadImage();
+        u.execute();
+    }
 
+
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 
     //Server Call

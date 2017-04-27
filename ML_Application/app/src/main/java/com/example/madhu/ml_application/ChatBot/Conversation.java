@@ -2,6 +2,8 @@ package com.example.madhu.ml_application.ChatBot;
 
 
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 /**
@@ -33,12 +35,21 @@ public class Conversation
 	private boolean receiver=true;
 
 	private boolean isImg=false;
+	private Bitmap bitmapImage;
 
+	public void setBitmapImage(Bitmap b)
+	{
+		this.bitmapImage=b;
+	}
 
 	public void setReceiver(boolean re)
 	{
 
 		this.receiver=re;
+	}
+	public Bitmap getBitmapImage()
+	{
+		return bitmapImage;
 	}
 
 	public void isImage(boolean img)

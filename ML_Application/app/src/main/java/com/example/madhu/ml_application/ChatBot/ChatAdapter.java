@@ -57,25 +57,20 @@ public class ChatAdapter  extends BaseAdapter {
                 convertView = mInflater.inflate(R.layout.chat_item_rcv, null);
             else
                 convertView = mInflater.inflate(R.layout.chat_item_sent, null);
-        }
-        else if(conversation.isSent())
-            convertView = mInflater.inflate(R.layout.chat_item_rcv_image, null);
-        else
-            convertView = mInflater.inflate(R.layout.chat_item_sent_image, null);
 
 
-        item = new ViewItem();
+            item = new ViewItem();
 
-        item.time = (TextView) convertView
-                .findViewById(R.id.time);
+            item.time = (TextView) convertView
+                    .findViewById(R.id.time);
 
-        item.message = (TextView) convertView
-                .findViewById(R.id.msg);
+            item.message = (TextView) convertView
+                    .findViewById(R.id.msg);
 
-        item.st = (TextView) convertView
-                .findViewById(R.id.st);
+            item.st = (TextView) convertView
+                    .findViewById(R.id.st);
 
-        convertView.setTag(item);
+            convertView.setTag(item);
 
         /*if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item, null);
@@ -97,8 +92,23 @@ public class ChatAdapter  extends BaseAdapter {
 */
 
 
-        item.time.setText(conversation.getDate().toString());
-        item.message.setText(conversation.getMsg());
+            item.time.setText(conversation.getDate().toString());
+            item.message.setText(conversation.getMsg());
+            item.st.setText(conversation.getStatusSending());
+            return convertView;
+
+        }
+        else if(conversation.isSent())
+            convertView = mInflater.inflate(R.layout.chat_item_rcv_image, null);
+        else
+            convertView = mInflater.inflate(R.layout.chat_item_sent_image, null);
+
+        item = new ViewItem();
+        item.img = (ImageView) convertView
+                .findViewById(R.id.imageViewtrue);
+
+        convertView.setTag(item);
+        item.img.setImageBitmap(conversation.getBitmapImage());
         item.st.setText(conversation.getStatusSending());
 
         return convertView;
@@ -109,6 +119,7 @@ public class ChatAdapter  extends BaseAdapter {
         TextView st;
         TextView time;
         TextView message;
+        ImageView img;
     }
 
 }
