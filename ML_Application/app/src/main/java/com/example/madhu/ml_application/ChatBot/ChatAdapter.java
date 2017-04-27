@@ -51,10 +51,19 @@ public class ChatAdapter  extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewItem item;
         Conversation conversation = conversations.get(position);
-        if (conversation.isSent())
-            convertView = mInflater.inflate(R.layout.chat_item_rcv, null);
+        if (!conversation.isImgSet())
+        {
+            if (conversation.isSent())
+                convertView = mInflater.inflate(R.layout.chat_item_rcv, null);
+            else
+                convertView = mInflater.inflate(R.layout.chat_item_sent, null);
+        }
+        else if(conversation.isSent())
+            convertView = mInflater.inflate(R.layout.chat_item_rcv_image, null);
         else
-            convertView = mInflater.inflate(R.layout.chat_item_sent, null);
+            convertView = mInflater.inflate(R.layout.chat_item_sent_image, null);
+
+
         item = new ViewItem();
 
         item.time = (TextView) convertView

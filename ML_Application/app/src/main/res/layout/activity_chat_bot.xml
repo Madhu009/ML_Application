@@ -34,6 +34,12 @@
         android:padding="@dimen/pad_5dp"
         tools:context=".ChatBot" >
 
+        <Button
+            android:id="@+id/img"
+            style="@style/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/img" />
 
         <EditText
             android:id="@+id/ChatEditText"
@@ -42,9 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.06"
             android:hint="Enter Text" >
-
-
         </EditText>
+
 
         <Button
             android:id="@+id/ChatSend"

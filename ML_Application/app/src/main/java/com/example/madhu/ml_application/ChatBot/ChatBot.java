@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -24,6 +27,7 @@ import com.example.madhu.ml_application.demo.custom.CustomActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,10 +42,13 @@ public class ChatBot extends AppCompatActivity {
     //private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";//java
     private HTTPURLConnection service=new HTTPURLConnection();
 
+    private final int PICK_IMAGE_REQUEST = 1;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private EditText txt;
     private Button btsend;
+    private Button imageButton;
     private ImageButton btnSpeak;
+    private Bitmap bitmap;
     ChatAdapter adapter;
     String msg="";
     CustomActivity c=new CustomActivity();
@@ -60,6 +67,20 @@ public class ChatBot extends AppCompatActivity {
                 | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 
         btsend=(Button)findViewById(R.id.ChatSend);
+        imageButton=(Button)findViewById(R.id.img);
+
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+            }
+        });
+
+
+
+
+
         btsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +118,17 @@ public class ChatBot extends AppCompatActivity {
     }
 
 
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+
+
+
+
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -128,8 +160,32 @@ public class ChatBot extends AppCompatActivity {
                 }
                 break;
             }
+            case PICK_IMAGE_REQUEST:
+            {
+                if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                    Uri filePath = data.getData();
+                    try {
+
+                        Conversation co=new Conversation();
+                        co.setStatus(100);
+                        co.isImage(true);
+                        convs.add(co);
+                        adapter.notifyDataSetChanged();
+
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                        //imageView.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+            }
+
+
 
         }
+
     }
 
     //Server Call

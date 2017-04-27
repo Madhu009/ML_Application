@@ -32,12 +32,21 @@ public class Conversation
 	/** The sender. */
 	private boolean receiver=true;
 
+	private boolean isImg=false;
+
 
 	public void setReceiver(boolean re)
 	{
 
 		this.receiver=re;
 	}
+
+	public void isImage(boolean img)
+	{
+
+		this.isImg=img;
+	}
+
 
 	public Conversation() {
 
@@ -81,6 +90,11 @@ public class Conversation
 	{
 		return receiver;
 		//return UserList.user.getId().contentEquals(sender);
+	}
+
+	public boolean isImgSet()
+	{
+		return isImg;
 	}
 
 	/**
