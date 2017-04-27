@@ -330,7 +330,7 @@ public class ChatBot extends AppCompatActivity {
             try {
                 JSONObject obj = new JSONObject(response);
                 Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                if (obj.getString("response").equals("yes")) {
+                if (obj.getString("response").equals("yes")&& obj.getString("image").equals("")) {
                     Conversation c=convs.get(convs.size()-1);
                     c.setStatusSending("Sent");
                     adapter.notifyDataSetChanged();
@@ -343,6 +343,23 @@ public class ChatBot extends AppCompatActivity {
                     res.setDate(Calendar.getInstance().getTime());
                     res.setStatusSending("Received");
                     res.setReceiver(false);
+                    convs.add(res);
+                    adapter.notifyDataSetChanged();
+
+                }
+
+                else  if (obj.getString("response").equals("yes")&& !obj.getString("image").equals(""))
+                {
+                    Conversation c=convs.get(convs.size()-1);
+                    c.setStatusSending("Sent");
+                    adapter.notifyDataSetChanged();
+
+                    String img=obj.getString("image");
+                    Bitmap b=StringToBitMap(img);
+                    Conversation res=new Conversation();
+                    res.setBitmapImage(b);
+                    res.setStatusSending("Received");
+                    res.isImage(true);
                     convs.add(res);
                     adapter.notifyDataSetChanged();
 
