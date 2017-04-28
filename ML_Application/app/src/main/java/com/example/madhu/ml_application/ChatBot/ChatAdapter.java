@@ -106,6 +106,8 @@ public class ChatAdapter  extends BaseAdapter {
         item = new ViewItem();
         item.img = (ImageView) convertView
                 .findViewById(R.id.imageViewtrue);
+        item.st = (TextView) convertView
+                .findViewById(R.id.st);
 
         convertView.setTag(item);
         item.img.setImageBitmap(conversation.getBitmapImage());

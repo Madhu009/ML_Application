@@ -114,6 +114,7 @@ public class ImageUpload extends AppCompatActivity
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
                startActivity(new Intent(getApplicationContext(),Login.class));
                 finish();
 

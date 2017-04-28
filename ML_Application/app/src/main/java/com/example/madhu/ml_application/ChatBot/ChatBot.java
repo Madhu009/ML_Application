@@ -46,7 +46,7 @@ public class ChatBot extends AppCompatActivity {
     public static final String KEY_TEXT = "name";
     public static final String UPLOAD_URL = "http://10.0.2.2:8080/ML_Application/rest/Service/upload";
 
-    private String path = "http://10.0.2.2:5000/gett";
+    private String path = "http://10.0.2.2:5000/get_response";
     //private String path = "http://10.0.2.2:8080/ML_Application/rest/Service/chat";//java
     private HTTPURLConnection service=new HTTPURLConnection();
 
@@ -173,15 +173,13 @@ public class ChatBot extends AppCompatActivity {
                 if (resultCode == RESULT_OK && data != null && data.getData() != null) {
                     Uri filePath = data.getData();
                     try {
-
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                         Conversation co=new Conversation();
                         co.setStatus(100);
                         co.isImage(true);
+                        co.setBitmapImage(bitmap);
                         convs.add(co);
                         adapter.notifyDataSetChanged();
-
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                        //imageView.setImageBitmap(bitmap);
                         uploadImage();
                     } catch (IOException e) {
                         e.printStackTrace();
