@@ -57,6 +57,7 @@ public class ChatBot extends AppCompatActivity {
     private Button imageButton;
     private ImageButton btnSpeak;
     private Bitmap bitmap;
+    private ListView chatList;
     ChatAdapter adapter;
     String msg="";
     CustomActivity c=new CustomActivity();
@@ -66,7 +67,7 @@ public class ChatBot extends AppCompatActivity {
         setContentView(R.layout.activity_chat_bot);
 
         convs=ConversationHelper.getConversations();
-        ListView chatList = (ListView) findViewById(R.id.ChatList);
+        chatList = (ListView) findViewById(R.id.ChatList);
         adapter=new ChatAdapter(convs,getLayoutInflater());
         chatList.setAdapter(adapter);
 
@@ -134,6 +135,18 @@ public class ChatBot extends AppCompatActivity {
     }
 
 
+    private void scrollMyListViewToBottom() {
+        chatList.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                chatList.setSelection(adapter.getCount() - 1);
+            }
+        });
+    }
+
+
+
 
 
 
@@ -180,6 +193,7 @@ public class ChatBot extends AppCompatActivity {
                         co.setBitmapImage(bitmap);
                         convs.add(co);
                         adapter.notifyDataSetChanged();
+                        scrollMyListViewToBottom();
                         uploadImage();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -279,6 +293,8 @@ public class ChatBot extends AppCompatActivity {
     }
 
 
+
+
     public Bitmap StringToBitMap(String encodedString){
         try{
             byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
@@ -332,6 +348,7 @@ public class ChatBot extends AppCompatActivity {
                     Conversation c=convs.get(convs.size()-1);
                     c.setStatusSending("Sent");
                     adapter.notifyDataSetChanged();
+                    scrollMyListViewToBottom();
 
                     String message = obj.getString("msg");
 
@@ -343,7 +360,7 @@ public class ChatBot extends AppCompatActivity {
                     res.setReceiver(false);
                     convs.add(res);
                     adapter.notifyDataSetChanged();
-
+                    scrollMyListViewToBottom();
                 }
 
                 else  if (obj.getString("response").equals("yes")&& !obj.getString("image").equals(""))
@@ -351,6 +368,7 @@ public class ChatBot extends AppCompatActivity {
                     Conversation c=convs.get(convs.size()-1);
                     c.setStatusSending("Sent");
                     adapter.notifyDataSetChanged();
+                    scrollMyListViewToBottom();
 
                     String img=obj.getString("image");
                     Bitmap b=StringToBitMap(img);
@@ -360,6 +378,7 @@ public class ChatBot extends AppCompatActivity {
                     res.isImage(true);
                     convs.add(res);
                     adapter.notifyDataSetChanged();
+                    scrollMyListViewToBottom();
 
                 }
                 else
